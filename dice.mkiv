@@ -1,0 +1,86 @@
+\starttext
+\chapter{Dawing A die}
+
+Suppose we want to draw a die
+\startalignment[center]
+\externalfigure[files/die.png]
+\stopalignment
+To do that, let us first define a macro which will draw a single face
+of the die: a square with number \type{s} on it.
+
+\startbuffer[face]
+  def face (expr s) = image (begingroup
+    pickup pencircle scaled 1pt;
+    draw (0.5, 0.5) -- (0.5, 9.5) -- (9.5, 9.5) -- (9.5, 0.5) -- cycle;
+    label (s, (5, 5));
+  endgroup) scaled 10 enddef;  
+\stopbuffer
+
+\typebuffer[face]
+
+\startbuffer[faceone]
+  draw face ("1");
+\stopbuffer
+
+Now we can draw it and get the picture:
+
+\processMPbuffer[face,faceone]    
+
+\typebuffer[faceone]
+
+Next, we need an upper face and a right face. To draw them, we will
+have to compose an affine transformation to skew them. This can be
+tricky since the only readily available primitive transformation for
+skewing is slanted a which transforms a point \type{ (x, y)}
+into \type{(x + ay, y)}.
+
+\startbuffer[facetwo]
+  draw face ("2") slanted 1;
+\stopbuffer
+
+\typebuffer[faceone]
+
+Here is our picture slanted 2:
+
+\processMPbuffer[face,facetwo]
+
+To make it look realistic for the eye leve we will scale it along the
+y-axis 
+
+\startbuffer[facetop]
+  draw face ("2") yscaled 0.45 slanted 1;
+\stopbuffer
+
+\typebuffer[facetop]
+
+This shoule yield us following picture
+
+\processMPbuffer[face,facetop]
+
+Now let's do the right side projection. We will x-scale it by the same
+factor, turn it -90 degrees slant it -1 and then turn it back up
+
+\startbuffer[faceright]
+  draw face ("3") xscaled 0.45 rotated -90 slanted -1 rotated 90;
+\stopbuffer
+
+\typebuffer[faceright]
+
+This should yield us following picture
+
+\processMPbuffer[face,faceright]
+
+Now let's put it together by shifting top face by 100 on \type{y} and
+shifting right face by 100 on \type{x}
+
+\startbuffer[facestogether]
+  draw face ("1");
+  draw face ("2") yscaled 0.45 slanted 1 shifted (0,100);
+  draw face ("3") xscaled 0.45 rotated -90 slanted -1 rotated 90 shifted (100,0);
+\stopbuffer
+
+\typebuffer[facestogether]
+
+\processMPbuffer[face,facestogether]
+
+\stoptext 
