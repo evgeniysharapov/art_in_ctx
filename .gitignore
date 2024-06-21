@@ -1,0 +1,5 @@
+*.log
+*.tuc
+*.synctex
+*.pgf
+*.log#
