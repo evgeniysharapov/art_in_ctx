@@ -1,10 +1,23 @@
-\starttext
-\chapter{Dawing A die}
+\def\pict#1{%
+  \startplacefigure[location={none,here}]
+    #1%
+  \stopplacefigure  
+}
+
+\environment art_in_ctx_env.mkiv
+
+\startcomponent
+
+  \starttext
+
+\title{Drawing}
+  
+\chapter{Drawing a Die}
 
 Suppose we want to draw a die
-\startalignment[center]
-\externalfigure[files/die.png]
-\stopalignment
+
+\pict{\externalfigure[die.png][width=0.25\textwidth]}
+
 To do that, let us first define a macro which will draw a single face
 of the die: a square with number \type{s} on it.
 
@@ -12,7 +25,7 @@ of the die: a square with number \type{s} on it.
   def face (expr s) = image (begingroup
     pickup pencircle scaled 1pt;
     draw (0.5, 0.5) -- (0.5, 9.5) -- (9.5, 9.5) -- (9.5, 0.5) -- cycle;
-    label (s, (5, 5));
+    label (s, (5.75, 5.75)) scaled 0.85;
   endgroup) scaled 10 enddef;  
 \stopbuffer
 
@@ -22,11 +35,13 @@ of the die: a square with number \type{s} on it.
   draw face ("1");
 \stopbuffer
 
-Now we can draw it and get the picture:
-
-\processMPbuffer[face,faceone]    
+Now we can draw it using
 
 \typebuffer[faceone]
+
+and get the picture:
+
+\pict{\processMPbuffer[face,faceone]}
 
 Next, we need an upper face and a right face. To draw them, we will
 have to compose an affine transformation to skew them. This can be
@@ -42,7 +57,7 @@ into \type{(x + ay, y)}.
 
 Here is our picture slanted 2:
 
-\processMPbuffer[face,facetwo]
+\pict{\processMPbuffer[face,facetwo]}
 
 To make it look realistic for the eye leve we will scale it along the
 y-axis 
@@ -55,7 +70,7 @@ y-axis
 
 This shoule yield us following picture
 
-\processMPbuffer[face,facetop]
+\pict{\processMPbuffer[face,facetop]}
 
 Now let's do the right side projection. We will x-scale it by the same
 factor, turn it -90 degrees slant it -1 and then turn it back up
@@ -68,7 +83,7 @@ factor, turn it -90 degrees slant it -1 and then turn it back up
 
 This should yield us following picture
 
-\processMPbuffer[face,faceright]
+\pict{\processMPbuffer[face,faceright]}
 
 Now let's put it together by shifting top face by 100 on \type{y} and
 shifting right face by 100 on \type{x}
@@ -81,6 +96,7 @@ shifting right face by 100 on \type{x}
 
 \typebuffer[facestogether]
 
-\processMPbuffer[face,facestogether]
+\pict{\processMPbuffer[face,facestogether]}
 
 \stoptext 
+\stopcomponent
