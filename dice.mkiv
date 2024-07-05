@@ -7,11 +7,20 @@
 \environment art_in_ctx_env.mkiv
 
 \startcomponent
+  
+  
+\starttext
 
-  \starttext
+\switchtobodyfont[lato]
 
 \title{Drawing}
-  
+
+\chapter{Fonts}
+
+\showbodyfont[plex]
+\showbodyfont[nimbus]
+\showbodyfont[lato]
+
 \chapter{Drawing a Die}
 
 Suppose we want to draw a die
@@ -97,6 +106,26 @@ shifting right face by 100 on \type{x}
 \typebuffer[facestogether]
 
 \pict{\processMPbuffer[face,facestogether]}
+
+Now we can turn the die into a \type{picture}
+
+\startbuffer[facespic]
+  picture die;
+  die := image(
+  begingroup
+  draw face ("1");
+  draw face ("2") yscaled 0.45 slanted 1 shifted (0,100);
+  draw face ("3") xscaled 0.45 rotated -90 slanted -1 rotated 90 shifted (100,0);
+  endgroup
+  );
+  draw die rotated 45;
+ \stopbuffer
+
+Drawing it as image with transformation
+
+\typebuffer[facespic]
+
+\pict{\processMPbuffer[face,facespic]}
 
 \stoptext 
 \stopcomponent
