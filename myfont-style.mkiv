@@ -1,0 +1,49 @@
+% 
+% ---    Font Environment
+%
+
+% Setting up a Typescript
+% In order to end up with a useable font within ConTEXt, one proceeds
+% in three steps involving three typescripts:
+% -  First typescript: map a symbolic, human-readable name onto the
+% filename by using \definefontsynonym
+% - Second typescript: map the internal basic name on to the human
+% readable name by using \definefontsynonym
+% - Third typescript: create a typeface by using \definetypeface
+%
+
+\startenvironment myfont
+  % first argument is a style (one of):
+  % - serif
+  % - sans
+  % - mono
+  % - math
+  % - calligraphy
+  % - handwriting
+
+  %%%% Synonyms for files 
+  
+  \starttypescript[sans][myfont]
+    \definefontsynonym[myfontregular] [file:Montserrat-Regular]
+    \definefontsynonym[myfontbold] [file:Montserrat-Bold]
+    \definefontsynonym[myfontitalic] [file:Montserrat-Italic]
+    \definefontsynonym[myfontitalic][file:Montserrat-BoldItalic]    
+  \stoptypescript
+
+  %%%% internal basic names are linked to the just defined human readable names
+  
+  \starttypescript[sans][myfont]
+    \setups[font:fallback:sans]
+    \definefontsynonym[Sans] [myfontregular] [features=default]
+    \definefontsynonym[SansBold] [myfontbold] [features=default]
+    \definefontsynonym[SansItalic] [myfontitalic] [features=default]
+    \definefontsynonym[SansBoldItalic][myfontbolditalic][features=default]
+  \stoptypescript
+
+  %%%% the typeface is defined.  
+
+  \starttypescript[MyFont]
+    \definetypeface[MyFont][ss][sans][myfont][default]
+  \stoptypescript   
+  
+\stopenvironment

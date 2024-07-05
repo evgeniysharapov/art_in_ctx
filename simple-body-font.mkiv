@@ -1,0 +1,35 @@
+\usemodule[vim]
+\definevimtyping [RUBY]  [syntax=ruby, escape=on]
+
+\definefontfamily [windows] [rm] [Merriweather]
+\definefontfamily [windows] [ss] [Montserrat]
+\definefontfamily [windows] [tt] [Fira Mono]
+\definetypeface   [windows] [mm] [math] [termes] % use \definetypeface to load a math font
+
+\setupbodyfont[windows]
+
+\starttext
+
+\startbuffer[sampletext]
+The quick brown fox jumps over the lazy dog
+\stopbuffer
+
+
+\blank
+
+{ \getbuffer[sampletext]}\crlf
+{\it \getbuffer[sampletext]}\crlf
+{\ss \getbuffer[sampletext]}\crlf
+{\bf \getbuffer[sampletext]}\crlf
+{\bi \getbuffer[sampletext]}\crlf
+
+\startRUBY
+# Returns \m{\sum_{i=1}^{n}i}
+def sum_upto(n)
+    r = range(1, n+1)
+    return sum(r)
+    
+\stopRUBY
+
+
+\stoptext 
